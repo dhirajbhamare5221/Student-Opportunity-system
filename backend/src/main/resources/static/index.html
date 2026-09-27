@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpportunityHub | Student Opportunity Discovery Platform</title>
+  <meta name="description" content="Discover internships, hackathons, scholarships, and courses tailored for computer engineering students.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo" id="brand-logo">
+        <div class="brand-icon">🎓</div>
+        <span>OpportunityHub</span>
+      </a>
+
+      <div class="nav-actions" id="auth-actions">
+        <button class="btn btn-outline" id="btn-login-modal">Log In</button>
+        <button class="btn btn-primary" id="btn-register-modal">Get Started</button>
+      </div>
+      
+      <div class="nav-actions" id="user-actions" style="display: none;">
+        <button class="btn btn-primary" id="btn-admin" style="display: none;">⚙️ Admin</button>
+        <span class="user-greeting" id="user-greeting">Hi, Student!</span>
+        <button class="btn btn-outline" id="btn-logout">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="badge-tag">
+        <span>🚀</span> 3rd Year Computer Engineering Project
+      </div>
+
+      <h1 class="hero-title">
+        Discover Opportunities That <span>Ignite Your Career</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Find internships, hackathons, scholarships, courses, and certifications tailored to your engineering skills and interests—all in one unified platform.
+      </p>
+
+      <div class="search-wrapper">
+        <span style="font-size: 1.2rem; color: var(--text-muted); margin-left: 0.5rem;">🔍</span>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="search-input" 
+          placeholder="Search 'Java', 'Remote Internship', 'AWS'..."
+        >
+        <button class="btn btn-primary" id="btn-search">Search</button>
+      </div>
+
+      <!-- Category Filters (Only visible in All mode) -->
+      <div class="quick-category-pills" id="category-filters">
+        <button class="pill active" data-category="All">All</button>
+        <button class="pill" data-category="Internships">💼 Internships</button>
+        <button class="pill" data-category="Hackathons">🏆 Hackathons</button>
+        <button class="pill" data-category="Courses">📚 Courses</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content: Opportunities Feed -->
+  <main class="main-content">
+    
+    <!-- Feed Tabs -->
+    <div class="feed-tabs" id="feed-tabs">
+      <button class="tab-btn active" data-view="all">All Opportunities</button>
+      <button class="tab-btn" data-view="recommended" style="display: none;" id="tab-recommended">✨ For You</button>
+      <button class="tab-btn" data-view="saved" style="display: none;" id="tab-saved">🔖 Saved Items</button>
+    </div>
+
+    <div class="feed-header">
+      <h2 class="feed-title" id="feed-main-title">Latest Opportunities</h2>
+      <span class="feed-count" id="feed-count">0 found</span>
+    </div>
+    
+    <div class="opportunities-grid" id="opportunities-feed">
+      <!-- Cards will be injected here by JS -->
+      <div class="loading-spinner">Loading opportunities...</div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p><strong>OpportunityHub</strong> — Student Opportunity Discovery Platform | 3rd Year Computer Engineering Project</p>
+    <p style="margin-top: 0.35rem; font-size: 0.82rem;">Built with Spring Boot 3, Java, Spring Data JPA, HTML5, CSS3 & JavaScript.</p>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-card">
+      <button class="close-modal" id="close-login">&times;</button>
+      <h2 class="modal-title">Welcome Back</h2>
+      <p class="modal-subtitle">Log in to discover new opportunities.</p>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email</label>
+          <input type="email" class="form-control" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" class="form-control" id="login-password" required>
+        </div>
+        <div class="form-error" id="login-error"></div>
+        <button type="submit" class="btn btn-primary w-100">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="modal-card">
+      <button class="close-modal" id="close-register">&times;</button>
+      <h2 class="modal-title">Create an Account</h2>
+      <p class="modal-subtitle">Join OpportunityHub today.</p>
+      
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Full Name</label>
+          <input type="text" class="form-control" id="reg-name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email</label>
+          <input type="email" class="form-control" id="reg-email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password</label>
+          <input type="password" class="form-control" id="reg-password" minlength="6" required>
+        </div>
+        <div class="form-error" id="register-error"></div>
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Create Modal -->
+  <div class="modal-overlay" id="admin-modal">
+    <div class="modal-card" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+      <button class="close-modal" id="close-admin">&times;</button>
+      <h2 class="modal-title">Admin Dashboard</h2>
+      <p class="modal-subtitle">Post a new opportunity to the platform.</p>
+      
+      <form id="admin-form">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" id="opp-title" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Organization</label>
+          <input type="text" class="form-control" id="opp-org" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" id="opp-desc" rows="3" required></textarea>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-control" id="opp-category" required>
+              <option value="Internships">Internships</option>
+              <option value="Hackathons">Hackathons</option>
+              <option value="Courses">Courses</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <input type="text" class="form-control" id="opp-location" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Deadline</label>
+            <input type="date" class="form-control" id="opp-deadline" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Stipend/Prize (₹)</label>
+            <input type="number" class="form-control" id="opp-stipend" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Skills Required (Comma separated)</label>
+          <input type="text" class="form-control" id="opp-skills" placeholder="e.g. Java, Python, React" required>
+        </div>
+
+        <div class="form-error" id="admin-error"></div>
+        <button type="submit" class="btn btn-primary w-100">Publish Opportunity</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

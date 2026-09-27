@@ -1,0 +1,12 @@
+target/
+.mvn/
+*.log
+.DS_Store
+.idea/
+*.class
+*.iml
+.vscode/
+node_modules/
+.env
+.mv.db
+.trace.db
